@@ -50,5 +50,18 @@ namespace CardPath.Test
             Assert.IsTrue(arr[1].Equals(c2));
             Assert.IsTrue(arr[2].Equals(c3));
         }
+
+        [TestMethod]
+        [Description("Проверка на выброс исключения, если есть цикл")]
+        [ExpectedException(typeof(ApplicationException))]
+        public void CheckForCircle() {
+            var c1 = new CardPath(new City("1"), new City("2"));
+            var c2 = new CardPath(new City("2"), new City("1"));
+            var c3 = new CardPath(new City("2"), new City("3"));
+            var c4 = new CardPath(new City("3"), new City("4"));
+            var c5 = new CardPath(new City("4"), new City("2"));
+
+            CardPath.LinkCard(new List<CardPath> { c1, c2 });
+        }
     }
 }
